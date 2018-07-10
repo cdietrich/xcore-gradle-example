@@ -39,6 +39,14 @@ xtext {
             generator.outlet.producesJava = true
         }
     }
+   sourceSets {
+      main {
+        srcDir 'src/main/resources'
+        output {
+            dir(xtext.languages.xcore.generator.outlet, 'build/someSpecialDir')
+        }
+      }
+    }
 }
 
 dependencies {
