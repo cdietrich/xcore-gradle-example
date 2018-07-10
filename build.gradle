@@ -14,7 +14,7 @@ version = '0.4.0-SNAPSHOT'
 sourceCompatibility = 1.8
 
 ext {
-    xtextVersion = '2.13.0'
+    xtextVersion = '2.14.0'
 }
 
 sourceSets {
@@ -55,6 +55,24 @@ dependencies {
     xtextLanguages 'org.eclipse.emf:org.eclipse.emf.mwe2.runtime:+'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+}
+
+configurations.all {
+    resolutionStrategy { 
+        force 'com.google.guava:guava:21.0'
+        force 'org.eclipse.platform:org.eclipse.equinox.common:3.9.0'
+        force 'org.eclipse.platform:org.eclipse.equinox.registry:3.7.0'
+        force 'org.eclipse.platform:org.eclipse.osgi:3.12.100'
+        force 'org.eclipse.platform:org.eclipse.core.runtime:3.13.0'
+        eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'com.google.guava') {
+                details.useVersion '21.0'
+            }
+            if (details.requested.group == 'org.eclipse.jdt' && details.requested.name == 'org.eclipse.jdt.core') {
+                details.useVersion('3.13.102')
+            }
+        }
+    }
 }
 
 mainClassName = 'sample.Main'
