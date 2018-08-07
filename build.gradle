@@ -1,6 +1,8 @@
 buildscript {
     repositories {
-        mavenLocal()
+        maven {
+            url "file:///home/dietrich/git/xtext-gradle-plugin/.m2"
+        }
         jcenter()
     } 
     dependencies {
@@ -12,6 +14,9 @@ apply plugin: 'org.xtext.builder'
 repositories {
     mavenLocal()
     jcenter()
+     maven {
+            url "file:///home/dietrich/git/xtext-gradle-plugin/.m2"
+        }
 }
 
 apply plugin: 'java'
@@ -60,10 +65,10 @@ xtext {
 dependencies {
     compile "org.eclipse.xtext:org.eclipse.xtext:${xtextVersion}"
     compile "org.eclipse.xtext:org.eclipse.xtext.xbase:${xtextVersion}"
-    compile 'org.eclipse.emf:org.eclipse.emf.ecore.xcore.lib:+'
+    compile 'org.eclipse.emf:org.eclipse.emf.ecore.xcore.lib:1.1.100'
 
     xtextLanguages 'org.eclipse.emf:org.eclipse.emf.ecore.xcore:+'
-    xtextLanguages 'org.eclipse.emf:org.eclipse.emf.ecore.xcore.lib:+'
+    xtextLanguages 'org.eclipse.emf:org.eclipse.emf.ecore.xcore.lib:1.1.100'
     xtextLanguages 'org.eclipse.emf:org.eclipse.emf.codegen:+'
     xtextLanguages 'org.eclipse.emf:org.eclipse.emf.codegen.ecore:+'
     xtextLanguages 'org.eclipse.emf:org.eclipse.emf.codegen.ecore.xtext:+'
@@ -75,20 +80,21 @@ dependencies {
 
 configurations.all {
     resolutionStrategy { 
-        force 'com.google.guava:guava:21.0'
-        force 'org.eclipse.platform:org.eclipse.equinox.common:3.9.0'
-        force 'org.eclipse.platform:org.eclipse.equinox.registry:3.7.0'
-        force 'org.eclipse.platform:org.eclipse.osgi:3.12.100'
-        force 'org.eclipse.platform:org.eclipse.core.runtime:3.13.0'
         eachDependency { DependencyResolveDetails details ->
-            if (details.requested.group == 'org.eclipse.jdt') {
-               logger.error('An error log message.' + details.requested) 
+            if (details.requested.group == 'org.eclipse.emf') {
+               //logger.error('An error log message.' + details.requested + "details " +details) 
             }
             if (details.requested.group == 'com.google.guava') {
                 details.useVersion '21.0'
             }
             if (details.requested.group == 'org.eclipse.jdt' && details.requested.name == 'org.eclipse.jdt.core') {
                 details.useVersion('3.13.102')
+            }
+            if (details.requested.group == 'org.eclipse.platform' && details.requested.name == 'org.eclipse.core.runtime') {
+                details.useVersion('3.13.0')
+            }
+            if (details.requested.group == 'org.eclipse.platform' && details.requested.name == 'org.eclipse.equinox.common') {
+                details.useVersion('3.9.0')
             }
         }
     }

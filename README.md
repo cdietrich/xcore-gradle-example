@@ -8,7 +8,7 @@ This project shows how to use Gradle with the xtext-gradle-plugin to generate Ja
 To run it, you need Gradle (tested on 3.1) and use the command:
 
 ```
-gradle clean build
+./gradlew clean build --gradle-user-home=.g/
 ```
 
 

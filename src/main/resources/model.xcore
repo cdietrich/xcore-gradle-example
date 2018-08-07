@@ -1,9 +1,11 @@
 @GenModel(
     bundleManifest="false",
-    modelDirectory="./src/main/java-gen",
-    complianceLevel="7.0"
+    modelDirectory="xcore-gradle-example/src/main/java-gen",
+    complianceLevel="8.0"
 )
 package sample.model
+
+import xcore.lang.GenModel
 
 class User {
     String name
@@ -12,4 +14,8 @@ class User {
         "Hello " + user.name
     }
 
+}
+
+class Viech {
+	Integer a
 }
