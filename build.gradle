@@ -1,8 +1,16 @@
-plugins {
-    id "org.xtext.builder" version "1.0.21"
+buildscript {
+    repositories {
+        mavenLocal()
+        jcenter()
+    } 
+    dependencies {
+        classpath("org.xtext:xtext-gradle-plugin:1.0.22-SNAPSHOT")
+    }   
 }
+apply plugin: 'org.xtext.builder'
 
 repositories {
+    mavenLocal()
     jcenter()
 }
 
@@ -73,6 +81,9 @@ configurations.all {
         force 'org.eclipse.platform:org.eclipse.osgi:3.12.100'
         force 'org.eclipse.platform:org.eclipse.core.runtime:3.13.0'
         eachDependency { DependencyResolveDetails details ->
+            if (details.requested.group == 'org.eclipse.jdt') {
+               logger.error('An error log message.' + details.requested) 
+            }
             if (details.requested.group == 'com.google.guava') {
                 details.useVersion '21.0'
             }
